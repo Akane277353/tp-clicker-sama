@@ -94,6 +94,7 @@ class FightFragment( private val context: MainActivity, private val charList: Li
 
     fun back(){
         context.swipe = true
+        context.update()
         context.findViewById<LinearLayout>(R.id.layoutTop).setVisibility(View.VISIBLE)
         context.findViewById<LinearLayout>(R.id.layoutBot).setVisibility(View.VISIBLE)
         val trans = context.supportFragmentManager.beginTransaction()
