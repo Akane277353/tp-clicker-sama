@@ -164,8 +164,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
             )
 
             char5 = PlayableChar(
-                5,"404 Error", 1, 2000, 2200,
-                333, 666, 666, 666, false, true,111111
+                5,"404 Error", 1, 3333333, 66666,
+                999, 66666, 66666, 666, false, true,999999999
             )
 
 
