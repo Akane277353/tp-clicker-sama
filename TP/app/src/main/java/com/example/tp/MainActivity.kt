@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
     lateinit var char4 :PlayableChar
     lateinit var char5 :PlayableChar
 
+    lateinit var sensorManager :SensorManager
+
 
     private var updateFragment = UpdateFragment(this, charList)
 
@@ -258,7 +260,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
 
     override fun onResume() {
         super.onResume()
-        var sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager.registerListener(
             this,
             sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR),
@@ -266,7 +268,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
     }
     override fun onPause() {
         super.onPause()
-        //sensorManager.unregisterListener(this)
+        sensorManager.unregisterListener(this)
     }
 
     override fun update() {
