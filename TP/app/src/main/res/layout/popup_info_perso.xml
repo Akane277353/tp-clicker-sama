@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="360dp"
+    android:layout_height="500dp"
+    android:padding="30dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/imgItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ashe" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:text="attaque 2" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/nameChar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
+        android:layout_marginLeft="15dp"
+        style="@style/TextAppearance.AppCompat.Title"/>
+
+    <ImageView
+        android:id="@+id/closeButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
+        app:layout_constraintVertical_bias="0.616"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="110dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="44dp"
+        android:text="Points de vie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+
+    <TextView
+        android:id="@+id/pv"
+        android:layout_width="63dp"
+        android:layout_height="20dp"
+        android:text="pv"
+        app:layout_constraintEnd_toEndOf="@+id/degat1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/buttonPv"
+        android:layout_width="94dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="68dp"
+        android:text="Upgrade"
+        app:layout_constraintEnd_toEndOf="@+id/buttonAt1"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/pv"
+        app:layout_constraintTop_toBottomOf="@+id/nameChar"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/attaque1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Attaque :"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+    <TextView
+        android:id="@+id/degat1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:text="degat"
+        app:layout_constraintStart_toEndOf="@+id/attaque1"
+        app:layout_constraintTop_toTopOf="@+id/attaque1" />
+
+
+    <Button
+        android:id="@+id/buttonAt1"
+        android:layout_width="94dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="4dp"
+        android:text="Upgrade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pv" />
+
+    <TextView
+        android:id="@+id/attaque2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Attaque 2 :"
+        android:layout_marginTop="48dp"
+        app:layout_constraintStart_toStartOf="@+id/attaque1"
+        app:layout_constraintTop_toBottomOf="@+id/attaque1" />
+
+    <TextView
+        android:id="@+id/degat2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="degat 2"
+        app:layout_constraintEnd_toEndOf="@+id/degat1"
+        app:layout_constraintTop_toTopOf="@+id/attaque2" />
+
+    <Button
+        android:id="@+id/buttonAt2"
+        android:layout_width="94dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="28dp"
+        android:text="Upgrade"
+        app:layout_constraintEnd_toEndOf="@+id/buttonAt1"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/degat2"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAt1" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Attaque 3 :"
+        app:layout_constraintStart_toStartOf="@+id/attaque2"
+        app:layout_constraintTop_toBottomOf="@+id/attaque2" />
+
+    <TextView
+        android:id="@+id/degat3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="degat 3"
+        app:layout_constraintEnd_toEndOf="@+id/degat2"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+
+    <Button
+        android:id="@+id/buttonAt3"
+        android:layout_width="94dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="28dp"
+        android:text="Upgrade"
+        app:layout_constraintEnd_toEndOf="@+id/buttonAt1"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAt2" />
+
+    <Button
+        android:id="@+id/buyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Acheter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/degat3"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/teamButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="team"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/degat3"
+        tools:ignore="MissingConstraints" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

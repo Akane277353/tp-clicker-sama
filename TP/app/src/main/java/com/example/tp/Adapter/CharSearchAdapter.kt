@@ -1,0 +1,37 @@
+package com.example.tp.Adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.tp.Fragments.Team
+import com.example.tp.MainActivity
+import com.example.tp.Popup.CharPopup
+import com.example.tp.Model.PlayableChar
+import com.example.tp.Model.Player
+import com.example.tp.R
+
+class CharSearchAdapter(
+    private val charList: List<PlayableChar>,
+    val context : MainActivity,
+    val view: View,
+): RecyclerView.Adapter<CharSearchAdapter.ViewHolder>() {
+
+    class ViewHolder(view: View): RecyclerView.ViewHolder(view){
+        val charImage = view.findViewById<ImageView>(R.id.charTeam)
+    }
+
+    fun defView(parent: ViewGroup): View{
+        return LayoutInflater.from(parent.context).inflate(R.layout.character_team, parent, false)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(defView(parent))
+    }
+
+    override fun getItemCount(): Int = charList.size
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    }
+}
