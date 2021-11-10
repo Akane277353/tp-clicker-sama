@@ -17,7 +17,6 @@ class CharTeamAdapter(
     val context2: Team,
     val context : MainActivity,
     val view: View,
-    var player: Player,
     private val pos: Boolean
 ): RecyclerView.Adapter<CharTeamAdapter.ViewHolder>() {
 
@@ -48,7 +47,7 @@ class CharTeamAdapter(
                         holder.charImage.setImageResource(R.mipmap.heights)
                     }
                     holder.itemView.setOnClickListener{
-                        CharPopup(this, currentChar, player, context2).show()
+                        CharPopup(this, currentChar, context2).show()
                     }
                 }
             }
@@ -64,7 +63,7 @@ class CharTeamAdapter(
                 }
 
                 holder.itemView.setOnClickListener{
-                    CharPopup(this, currentChar, player, context2).show()
+                    CharPopup(this, currentChar, context2).show()
                 }
             }
     }

@@ -14,7 +14,7 @@ import com.example.tp.Model.Player
 import com.example.tp.R
 import com.example.tp.Stockage.CharStorage
 
-class Team(val context: MainActivity, var player: Player, var charList: List<PlayableChar>) : Fragment() {
+class Team(val context: MainActivity, var charList: List<PlayableChar>) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,8 +32,8 @@ class Team(val context: MainActivity, var player: Player, var charList: List<Pla
      fun refresh(view: View) {
         val charRecyclerView = view?.findViewById<RecyclerView>(R.id.charRecyclerView)
         val charRecyclerViewBottom = view?.findViewById<RecyclerView>(R.id.charRecyclerViewBottom)
-        charRecyclerView?.adapter = CharTeamAdapter(inTeam(),  this, context, view, player, true)
-        charRecyclerViewBottom?.adapter = CharTeamAdapter(outTeam(), this, context, view, player, false)
+        charRecyclerView?.adapter = CharTeamAdapter(inTeam(),  this, context, view, true)
+        charRecyclerViewBottom?.adapter = CharTeamAdapter(outTeam(), this, context, view, false)
     }
 
     fun itemPose(char: PlayableChar): Int{

@@ -13,6 +13,7 @@ import com.example.tp.Adapter.CharSearchAdapter
 import com.example.tp.MainActivity
 import com.example.tp.Model.PlayableChar
 import com.example.tp.R
+import com.example.tp.UpdateFragment
 
 class searchFightFragment( private val context: MainActivity, val charList: List<PlayableChar>) : Fragment() {
 
@@ -30,8 +31,8 @@ class searchFightFragment( private val context: MainActivity, val charList: List
     private fun refresh(view: View) {
         val charRecyclerView = view?.findViewById<RecyclerView>(R.id.charRecyclerView)
         charRecyclerView?.adapter = CharSearchAdapter(inTeam(), context, view)
-
         view.findViewById<Button>(R.id.search_button).setOnClickListener {
+            context.swipe = false
             context.findViewById<LinearLayout>(R.id.layoutTop).setVisibility(View.INVISIBLE)
             context.findViewById<LinearLayout>(R.id.layoutBot).setVisibility(View.INVISIBLE)
             val trans = context.supportFragmentManager.beginTransaction()

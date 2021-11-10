@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
 
     private lateinit var layout: LinearLayout
 
+    var multi = 1
+
+    var swipe = true
+
     var charList = arrayListOf<PlayableChar>()
 
     var player = Player(
@@ -43,7 +47,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
     lateinit var char5 :PlayableChar
 
 
-    private var updateFragment = UpdateFragment(this, player, charList)
+    private var updateFragment = UpdateFragment(this, charList)
 
     fun updateGold(){
         player.gold = player.gold + 10 * player.multiplicateur
@@ -56,9 +60,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
     }
 
     fun achat(price: Int){
-        player.gold = player.gold - price
-        findViewById<TextView>(R.id.goldText).text = player.gold.toString()
-        update()
+        if (player.gold >= price){
+            player.gold = player.gold - price
+            findViewById<TextView>(R.id.goldText).text = player.gold.toString()
+            update()
+        }
     }
 
     fun updateNbClique(){
@@ -128,8 +134,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         }
         else{
             player = PlayerStorage.get(applicationContext).findAll()[0]
-            println(player.id)
-            println(player.gold)
         }
         //PlayerStorage.get(applicationContext).clear()
 
@@ -188,6 +192,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
 
         findViewById<TextView>(R.id.goldText).text = player.gold.toString()
         findViewById<TextView>(R.id.xpText).text = player.xp.toString()
+        findViewById<TextView>(R.id.goldText).text = player.gold.toString()
 
 
         layout = findViewById(R.id.main_activity)
@@ -275,7 +280,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
 
     fun refreshFragment(){
         updateFragment.goTeam(true)
-        updateFragment.goFight(true)
+        updateFragment.goSearch(true)
         updateFragment.goClicker(true)
         updateFragment.goProfil()
         updateFragment.goShop(true)

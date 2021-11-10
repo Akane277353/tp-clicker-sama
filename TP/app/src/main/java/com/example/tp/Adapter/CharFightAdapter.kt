@@ -41,31 +41,19 @@ class CharFightAdapter(
 
         holder.charText.text = currentChar.hp.toString()
         if (pos){
-            if (currentChar.team == true){
-                holder.textAt.setVisibility(View.INVISIBLE)
-                holder.textEn.setVisibility(View.INVISIBLE)
-                if (currentChar.name == "jsp") {
-                    holder.charImage.setImageResource(R.mipmap.sombra)
-                }
-                else if (currentChar.name == "dude") {
-                    holder.charImage.setImageResource(R.mipmap.ashe)
-                }
-                else if (currentChar.name == "bob") {
-                    holder.charImage.setImageResource(R.mipmap.heights)
-                }
-                holder.itemView.setOnClickListener{
-                }
+            holder.textAt.setVisibility(View.INVISIBLE)
+            holder.textEn.setVisibility(View.INVISIBLE)
+            if (currentChar.name == "jsp") {
+                holder.charImage.setImageResource(R.mipmap.sombra)
+            }
+            else if (currentChar.name == "dude") {
+                holder.charImage.setImageResource(R.mipmap.ashe)
+            }
+            else if (currentChar.name == "bob") {
+                holder.charImage.setImageResource(R.mipmap.heights)
             }
         }
         else{
-            if (context2.nbAttaque(currentChar) == 0){
-                holder.textAt.setVisibility(View.INVISIBLE)
-            }
-            else{
-                holder.textAt.setVisibility(View.VISIBLE)
-                holder.textAt.text = context2.nbAttaque(currentChar).toString()
-            }
-
             holder.textEn.text = context2.ennemiName(currentChar)
             if (currentChar.name == "jsp") {
                 holder.charImage.setImageResource(R.mipmap.sombra)
@@ -77,8 +65,23 @@ class CharFightAdapter(
                 holder.charImage.setImageResource(R.mipmap.heights)
             }
 
-            holder.itemView.setOnClickListener{
-                FightPopup(this, currentChar, ennemi, holder).show()
+            if(currentChar.hp > 0){
+                if (context2.nbAttaque(currentChar) == 0){
+                    holder.textAt.setVisibility(View.INVISIBLE)
+                }
+                else{
+                    holder.textAt.setVisibility(View.VISIBLE)
+                    holder.textAt.text = context2.nbAttaque(currentChar).toString()
+                }
+                holder.textEn.text = context2.ennemiName(currentChar)
+
+                holder.itemView.setOnClickListener{
+                    FightPopup(this, currentChar, ennemi, holder).show()
+                }
+            }
+            else{
+                holder.textAt.setVisibility(View.INVISIBLE)
+                holder.textEn.text = ""
             }
         }
     }
