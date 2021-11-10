@@ -6,7 +6,7 @@ import org.json.JSONObject
 class CharJSONFileStorage private constructor(context: Context):
     JSONFileStorage<PlayableChar>(context, NAME) {
     companion object {
-        private const val NAME = "char"
+        private const val NAME = "playablechar"
 
         private var STORAGE: CharJSONFileStorage? = null
 
@@ -20,7 +20,7 @@ class CharJSONFileStorage private constructor(context: Context):
 
     override fun create(id: Int, obj: PlayableChar): PlayableChar {
         return PlayableChar(
-            id,
+            obj.id,
             obj.name,
             obj.hp,
             obj.dam1,

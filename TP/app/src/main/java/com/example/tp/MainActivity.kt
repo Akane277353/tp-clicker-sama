@@ -36,30 +36,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         1,"Gontran", 800000, 0, 0, 0, 1
     )
 
-    var char1 = PlayableChar(
-        1, "Giusepe", 1000, 100, 150,
-        250, 0, 0, 0, true, true,0
-    )
+    lateinit var char1 :PlayableChar
+    lateinit var char2 :PlayableChar
+    lateinit var char3 :PlayableChar
+    lateinit var char4 :PlayableChar
+    lateinit var char5 :PlayableChar
 
-    var char2 =  PlayableChar(
-        2, "Rigobert", 1750, 100, 150,
-        150, 1, 1, 1, false, true,5000
-    )
-
-    var char3 =  PlayableChar(
-        3, "George Ducoup", 3000, 30, 40,
-        50, 1, 1, 1, false, true,7500
-    )
-
-    var char4 = PlayableChar(
-        4,"Semi Chips", 450, 350, 450,
-        400, 1, 1, 1, false, false,10000
-    )
-
-    var char5 = PlayableChar(
-        5,"404 Error", 1, 2000, 2200,
-        333, 666, 666, 666, false, true,111111
-    )
 
     private var updateFragment = UpdateFragment(this, player, charList)
 
@@ -151,23 +133,41 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         }
         //PlayerStorage.get(applicationContext).clear()
 
-        charList.add(char1)
-        charList.add(char2)
-        charList.add(char3)
-        charList.add(char4)
-        charList.add(char5)
 
-        println("Avant le if")
         if(CharStorage.get(applicationContext).size() != 5) {
-            println("Avant")
+
+
+            char1 = PlayableChar(
+                1, "Giusepe", 1000, 100, 150,
+                250, 0, 0, 0, true, true,0
+            )
+
+            char2 =  PlayableChar(
+                2, "Rigobert", 1750, 101, 150,
+                150, 1, 1, 1, false, true,5000
+            )
+
+            char3 =  PlayableChar(
+                3, "George Ducoup", 3000, 30, 40,
+                50, 1, 1, 1, false, true,7500
+            )
+
+            char4 = PlayableChar(
+                4,"Semi Chips", 450, 350, 450,
+                400, 1, 1, 1, false, false,10000
+            )
+
+            char5 = PlayableChar(
+                5,"404 Error", 1, 2000, 2200,
+                333, 666, 666, 666, false, true,111111
+            )
+
 
             CharStorage.get(applicationContext).insert(char1)
             CharStorage.get(applicationContext).insert(char2)
             CharStorage.get(applicationContext).insert(char3)
             CharStorage.get(applicationContext).insert(char4)
             CharStorage.get(applicationContext).insert(char5)
-            println("Après")
-            Toast.makeText(applicationContext, "Creation", Toast.LENGTH_LONG).show()
         }
         else{
             char1 = CharStorage.get(applicationContext).findAll()[0]
@@ -175,13 +175,20 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
             char3 = CharStorage.get(applicationContext).findAll()[2]
             char4 = CharStorage.get(applicationContext).findAll()[3]
             char5 = CharStorage.get(applicationContext).findAll()[4]
-            Toast.makeText(applicationContext, "Recuperation", Toast.LENGTH_LONG).show()
+
+
         }
 
+        charList.add(char1)
+        charList.add(char2)
+        charList.add(char3)
+        charList.add(char4)
+        charList.add(char5)
         checkForPermissions(android.Manifest.permission.ACTIVITY_RECOGNITION, "activity", ACTIVITY_RECOGNITION_CODE)
 
-
+        findViewById<TextView>(R.id.goldText).text = player.gold.toString()
         findViewById<TextView>(R.id.xpText).text = player.xp.toString()
+
 
         layout = findViewById(R.id.main_activity)
         layout.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
@@ -264,7 +271,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         CharStorage.get(applicationContext).update(3, char3)
         CharStorage.get(applicationContext).update(4, char4)
         CharStorage.get(applicationContext).update(5, char5)
-
     }
 
     fun refreshFragment(){

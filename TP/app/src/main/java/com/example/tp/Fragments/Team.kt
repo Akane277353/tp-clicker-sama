@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tp.Adapter.CharTeamAdapter
@@ -11,6 +12,7 @@ import com.example.tp.MainActivity
 import com.example.tp.Model.PlayableChar
 import com.example.tp.Model.Player
 import com.example.tp.R
+import com.example.tp.Stockage.CharStorage
 
 class Team(val context: MainActivity, var player: Player, var charList: List<PlayableChar>) : Fragment() {
 
@@ -26,7 +28,8 @@ class Team(val context: MainActivity, var player: Player, var charList: List<Pla
         return view
     }
 
-    private fun refresh(view: View) {
+
+     fun refresh(view: View) {
         val charRecyclerView = view?.findViewById<RecyclerView>(R.id.charRecyclerView)
         val charRecyclerViewBottom = view?.findViewById<RecyclerView>(R.id.charRecyclerViewBottom)
         charRecyclerView?.adapter = CharTeamAdapter(inTeam(),  this, context, view, player, true)
@@ -54,6 +57,7 @@ class Team(val context: MainActivity, var player: Player, var charList: List<Pla
         val pos = itemPose(char)
         (activity as MainActivity).updateChar(newVal, pos)
         refresh(view)
+        context.update()
     }
 
     fun outTeam(): List<PlayableChar> {

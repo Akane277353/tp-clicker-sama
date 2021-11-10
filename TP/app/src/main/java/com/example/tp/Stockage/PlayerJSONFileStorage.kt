@@ -13,7 +13,7 @@ import org.json.JSONObject
 class PlayerJSONFileStorage  private constructor(context: Context):
     JSONFileStorage<Player>(context, NAME){
     companion object{
-        private const val NAME = "contact"
+        private const val NAME = "player"
 
         private var STORAGE: PlayerJSONFileStorage? = null
 
