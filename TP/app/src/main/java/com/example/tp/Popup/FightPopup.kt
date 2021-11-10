@@ -30,15 +30,15 @@ class FightPopup(
 
     private fun button() {
         findViewById<Button>(R.id.at1).setOnClickListener(){
-            adapter.context2.updateAt(currentChar, 1)
+            adapter.context2.updateAt(currentChar, currentChar.dam1)
             setUpCompoment()
         }
         findViewById<Button>(R.id.at2).setOnClickListener(){
-            adapter.context2.updateAt(currentChar, 2)
+            adapter.context2.updateAt(currentChar, currentChar.dam2)
             setUpCompoment()
         }
         findViewById<Button>(R.id.at3).setOnClickListener(){
-            adapter.context2.updateAt(currentChar, 3)
+            adapter.context2.updateAt(currentChar, currentChar.dam3)
             setUpCompoment()
         }
         findViewById<Button>(R.id.ennemi1).setOnClickListener(){
@@ -55,13 +55,15 @@ class FightPopup(
         }
         findViewById<Button>(R.id.valider).setOnClickListener(){
             var valide = true
-            if (adapter.context2.nbAttaque(currentChar) == 0){
-                Toast.makeText(adapter.context, "vous n'avez pas sélectionné d'attaque", Toast.LENGTH_SHORT).show()
-                valide = false
-            }
-            if (adapter.context2.ennemiName(currentChar) == ""){
-                Toast.makeText(adapter.context, "vous n'avez pas sélectionné de cible", Toast.LENGTH_SHORT).show()
-                valide = false
+            if ( currentChar.hp > 0){
+                if (adapter.context2.nbAttaque(currentChar) == 0){
+                    Toast.makeText(adapter.context, "vous n'avez pas sélectionné d'attaque", Toast.LENGTH_SHORT).show()
+                    valide = false
+                }
+                if (adapter.context2.ennemiName(currentChar) == ""){
+                    Toast.makeText(adapter.context, "vous n'avez pas sélectionné de cible", Toast.LENGTH_SHORT).show()
+                    valide = false
+                }
             }
             if (valide) {
                 adapter.modifAt(holder, currentChar)

@@ -100,11 +100,10 @@
         android:id="@+id/degat1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="52dp"
         android:text="degat"
         app:layout_constraintStart_toEndOf="@+id/attaque1"
         app:layout_constraintTop_toTopOf="@+id/attaque1" />
-
 
     <Button
         android:id="@+id/buttonAt1"

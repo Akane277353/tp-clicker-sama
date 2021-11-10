@@ -7,37 +7,40 @@ import com.example.tp.Fragments.*
 import com.example.tp.Model.PlayableChar
 import com.example.tp.Model.Player
 
-class UpdateFragment(private val context: MainActivity, val player: Player, val charList: List<PlayableChar>) {
+class UpdateFragment(private val context: MainActivity, val charList: List<PlayableChar>) {
 
     lateinit var currentFragment: String
 
     val view = R.layout.activity_main
 
     fun switch(left: Boolean){
-        if (currentFragment == "home" && !left){
-            goTeam(false)
+        if (context.swipe){
+            if (currentFragment == "home" && !left){
+                goTeam(false)
+            }
+            else if (currentFragment == "home" && left){
+                goSearch(false)
+            }
+            else if (currentFragment == "team" && !left){
+                goShop(false)
+            }
+            else if (currentFragment == "team" && left){
+                goClicker(false)
+            }
+            else if (currentFragment == "searchfight" && left){
+                goShop(false)
+            }
+            else if (currentFragment == "searchfight" && !left){
+                goClicker(false)
+            }
+            else if (currentFragment == "shop" && left){
+                goTeam(false)
+            }
+            else if (currentFragment == "shop" && !left){
+                goSearch(false)
+            }
         }
-        else if (currentFragment == "home" && left){
-            goFight(false)
-        }
-        else if (currentFragment == "team" && !left){
-            goShop(false)
-        }
-        else if (currentFragment == "team" && left){
-            goClicker(false)
-        }
-        else if (currentFragment == "searchfight" && left){
-            goShop(false)
-        }
-        else if (currentFragment == "searchfight" && !left){
-            goClicker(false)
-        }
-        else if (currentFragment == "shop" && left){
-            goTeam(false)
-        }
-        else if (currentFragment == "shop" && !left){
-            goFight(false)
-        }
+
     }
 
     fun updateCurFrag(str: String){
@@ -49,7 +52,7 @@ class UpdateFragment(private val context: MainActivity, val player: Player, val 
             context.findViewById<LinearLayout>(R.id.layoutTop).setVisibility(View.INVISIBLE)
             context.findViewById<LinearLayout>(R.id.layoutBot).setVisibility(View.VISIBLE)
             val trans = context.supportFragmentManager.beginTransaction()
-            trans.replace(R.id.fragmentContainer, PageProfil( context, player))
+            trans.replace(R.id.fragmentContainer, PageProfil( context, context.player))
             trans.addToBackStack(null)
             trans.commit()
             currentFragment = "profil"
@@ -62,7 +65,7 @@ class UpdateFragment(private val context: MainActivity, val player: Player, val 
                 context.findViewById<LinearLayout>(R.id.layoutTop).setVisibility(View.VISIBLE)
                 context.findViewById<LinearLayout>(R.id.layoutBot).setVisibility(View.VISIBLE)
                 val trans = context.supportFragmentManager.beginTransaction()
-                trans.replace(R.id.fragmentContainer, Team(context, player, charList))
+                trans.replace(R.id.fragmentContainer, Team(context, charList))
                 trans.addToBackStack(null)
                 trans.commit()
                 currentFragment = "team"
@@ -72,7 +75,7 @@ class UpdateFragment(private val context: MainActivity, val player: Player, val 
             context.findViewById<LinearLayout>(R.id.layoutTop).setVisibility(View.VISIBLE)
             context.findViewById<LinearLayout>(R.id.layoutBot).setVisibility(View.VISIBLE)
             val trans = context.supportFragmentManager.beginTransaction()
-            trans.replace(R.id.fragmentContainer, Team(context, player, charList))
+            trans.replace(R.id.fragmentContainer, Team(context, charList))
             trans.addToBackStack(null)
             trans.commit()
             currentFragment = "team"
@@ -124,7 +127,7 @@ class UpdateFragment(private val context: MainActivity, val player: Player, val 
         }
     }
 
-    fun goFight(bool: Boolean){
+    fun goSearch(bool: Boolean){
         if (bool){
             context.findViewById<Button>(R.id.fightButton).setOnClickListener {
                 context.findViewById<LinearLayout>(R.id.layoutTop).setVisibility(View.VISIBLE)

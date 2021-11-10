@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
 
     private lateinit var layout: LinearLayout
 
+    var multi = 1
+
+    var swipe = true
+
     var charList = arrayListOf<PlayableChar>()
 
     var player = Player(
@@ -38,7 +42,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
 
     var char1 = PlayableChar(
         1, "Giusepe", 1000, 100, 150,
-        250, 0, 0, 0, true, true,0
+        250, 1, 1, 1, true, true,0
     )
 
     var char2 =  PlayableChar(
@@ -57,11 +61,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
     )
 
     var char5 = PlayableChar(
-        5,"404 Error", 1, 2000, 2200,
-        333, 666, 666, 666, false, true,111111
+        5,"404 Error", 1, 333333333, 666666,
+        999, 666666666, 666666666, 666666, false, true,1111111111
     )
 
-    private var updateFragment = UpdateFragment(this, player, charList)
+    private var updateFragment = UpdateFragment(this, charList)
 
     fun updateGold(){
         player.gold = player.gold + 10 * player.multiplicateur
@@ -74,9 +78,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
     }
 
     fun achat(price: Int){
-        player.gold = player.gold - price
-        findViewById<TextView>(R.id.goldText).text = player.gold.toString()
-        update()
+        if (player.gold >= price){
+            player.gold = player.gold - price
+            findViewById<TextView>(R.id.goldText).text = player.gold.toString()
+            update()
+        }
     }
 
     fun updateNbClique(){
@@ -146,8 +152,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         }
         else{
             player = PlayerStorage.get(applicationContext).findAll()[0]
-            println(player.id)
-            println(player.gold)
         }
         //PlayerStorage.get(applicationContext).clear()
 
@@ -167,7 +171,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
             CharStorage.get(applicationContext).insert(char4)
             CharStorage.get(applicationContext).insert(char5)
             println("Après")
-            Toast.makeText(applicationContext, "Creation", Toast.LENGTH_LONG).show()
         }
         else{
             char1 = CharStorage.get(applicationContext).findAll()[0]
@@ -175,13 +178,13 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
             char3 = CharStorage.get(applicationContext).findAll()[2]
             char4 = CharStorage.get(applicationContext).findAll()[3]
             char5 = CharStorage.get(applicationContext).findAll()[4]
-            Toast.makeText(applicationContext, "Recuperation", Toast.LENGTH_LONG).show()
         }
 
         checkForPermissions(android.Manifest.permission.ACTIVITY_RECOGNITION, "activity", ACTIVITY_RECOGNITION_CODE)
 
 
         findViewById<TextView>(R.id.xpText).text = player.xp.toString()
+        findViewById<TextView>(R.id.goldText).text = player.gold.toString()
 
         layout = findViewById(R.id.main_activity)
         layout.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
@@ -269,7 +272,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
 
     fun refreshFragment(){
         updateFragment.goTeam(true)
-        updateFragment.goFight(true)
+        updateFragment.goSearch(true)
         updateFragment.goClicker(true)
         updateFragment.goProfil()
         updateFragment.goShop(true)
