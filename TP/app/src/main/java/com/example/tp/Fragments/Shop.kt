@@ -19,14 +19,17 @@ class Shop( context: Context) : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.activity_shop, container, false)
 
+        //Quand le bouton est cliqué, appel la fonction pour doubler l'or gagné
         view.findViewById<Button>(R.id.doubleOr).setOnClickListener {
             (activity as MainActivity?)?.doubleOr()
         }
 
+        //Quand le bouton est cliqué, appel la fonction pour triplé l'or gagné
         view.findViewById<Button>(R.id.tripleOr).setOnClickListener {
             (activity as MainActivity?)?.tripleOr()
         }
 
+        //Quand le bouton est cliqué, appel la fonction pour cliquer automatiquement
         view.findViewById<Button>(R.id.cliqueAuto).setOnClickListener {
             (activity as MainActivity?)?.cliqueAuto()
         }

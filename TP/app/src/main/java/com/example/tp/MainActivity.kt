@@ -26,7 +26,7 @@ import com.example.tp.Stockage.PlayerStorage
 
 private const val ACTIVITY_RECOGNITION_CODE: Int = 1
 
-class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
+class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var layout: LinearLayout
 
@@ -36,66 +36,75 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
 
     var charList = arrayListOf<PlayableChar>()
 
+    //Création du joueur
     var player = Player(
         1,"Gontran", 800000, 0, 0, 0, 1
     )
 
+    //Création des variables des personnages
     lateinit var char1 :PlayableChar
     lateinit var char2 :PlayableChar
     lateinit var char3 :PlayableChar
     lateinit var char4 :PlayableChar
     lateinit var char5 :PlayableChar
 
+    //Création de la variable sensorManager
     lateinit var sensorManager :SensorManager
 
 
     private var updateFragment = UpdateFragment(this, charList)
 
+    //Fonction qui update le nombre de gold
     fun updateGold(){
-        player.gold = player.gold + 10 * player.multiplicateur
-        findViewById<TextView>(R.id.goldText).text = player.gold.toString()
-        update()
+        player.gold = player.gold + 10 * player.multiplicateur //Augmente le nombre de gold dans le joueur
+        findViewById<TextView>(R.id.goldText).text = player.gold.toString() //Modifie l'affichage
+        update() //Sauvegarde
     }
 
+    //Fonction qui update les personnage dans la liste
     fun updateChar(newChar: PlayableChar, pos: Int){
         charList[pos] = newChar
     }
 
+    //Fonction qui permet d'acheter
     fun achat(price: Int){
         if (player.gold >= price){
-            player.gold = player.gold - price
-            findViewById<TextView>(R.id.goldText).text = player.gold.toString()
-            update()
+            player.gold = player.gold - price //Modifie nombre de gold
+            findViewById<TextView>(R.id.goldText).text = player.gold.toString() //Modifie l'affichage
+            update() //Sauvegarde
         }
     }
 
+    //Fonction qui update le nombre de clique
     fun updateNbClique(){
-        player.nbClique = player.nbClique + 1
+        player.nbClique = player.nbClique + 1 //Modifie le nombre de clique
     }
 
+
+    //Fonction utilisé dans le shop qui double le nombre de gold gagné pendant 10 minutes
     fun doubleOr(){
-        if (player.gold >= 300){
+        if (player.gold >= 300){ //Teste si le joueur à assez de gold pour acheter le boost
             player.gold = player.gold - 300
-            player.multiplicateur = player.multiplicateur + 2
+            player.multiplicateur = player.multiplicateur + 2 //Modifie le multiplicateur de gold
             findViewById<TextView>(R.id.goldText).text = player.gold.toString()
             val liveData: MutableLiveData<String> = MutableLiveData()
             val customCountDownTimer = Timer(liveData, 2, player)
-            customCountDownTimer.start(600) //Epoch timestamp
+            customCountDownTimer.start(600)  //Démarre le compteur pour 10 minutes
             customCountDownTimer.mutableLiveData.observe(this, Observer { counterState ->
                 counterState?.let {
                 }
             })
         }
     }
-
+    //Fonction utilisé dans le shop qui triple le nombre de gold gagné pendant 10 minutes
     fun tripleOr(){
-        if (player.gold >= 1000){
+        if (player.gold >= 1000){ //Teste si le joueur à assez de gold pour acheter le boost
             player.gold = player.gold - 1000
-            player.multiplicateur = player.multiplicateur + 3
+            player.multiplicateur = player.multiplicateur + 3 //Modifie le multiplicateur de gold
             findViewById<TextView>(R.id.goldText).text = player.gold.toString()
             val liveData: MutableLiveData<String> = MutableLiveData()
             val customCountDownTimer = Timer(liveData, 3, player)
-            customCountDownTimer.start(300) //Epoch timestamp
+            customCountDownTimer.start(300) //Démarre le compteur pour 10 minutes
             customCountDownTimer.mutableLiveData.observe(this, Observer { counterState ->
                 counterState?.let {
                 }
@@ -103,6 +112,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         }
     }
 
+    /*Fonction utilisé dans le shop qui permet d'avoir un clique automatique (le joueur n'as
+    pas besoin d'appuyer sur le bouton pour gagner des gold)*/
     fun cliqueAuto(){
         if (player.gold >= 2000){
             val liveData: MutableLiveData<String> = MutableLiveData()
@@ -111,8 +122,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
             customCountDownTimer.start(1800) //Epoch timestamp
             customCountDownTimer.mutableLiveData.observe(this, Observer { counterState ->
                 counterState?.let {
-                    //println(counterState)
-                    updateGold()
+                    updateGold() //Chaque seconde le nombre de gold s'update
                     updateNbClique()
                 }
             })
@@ -131,15 +141,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         updateFragment.updateCurFrag("home")
 
         //PlayerStorage.get(applicationContext).clear()
+        //Si c'est la première fois que le jeu est lancé il n'y a pas de joueur sauvegarder donc il est créer
         if(PlayerStorage.get(applicationContext).size() == 0) {
             PlayerStorage.get(applicationContext).insert(player)
         }
+        //Sinon on importe le joueur existant
         else{
             player = PlayerStorage.get(applicationContext).findAll()[0]
         }
         //PlayerStorage.get(applicationContext).clear()
 
-
+        /* Si c'est la première fois que le jeu est lancer on créer les personnages
+            puis on les ajoutes à la sauvegarde
+         */
         if(CharStorage.get(applicationContext).size() != 5) {
 
 
@@ -175,6 +189,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
             CharStorage.get(applicationContext).insert(char4)
             CharStorage.get(applicationContext).insert(char5)
         }
+        //Sinon on les importes
         else{
             char1 = CharStorage.get(applicationContext).findAll()[0]
             char2 = CharStorage.get(applicationContext).findAll()[1]
@@ -185,13 +200,17 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
 
         }
 
+        //Ajout des personnages à la liste des personnages existant
         charList.add(char1)
         charList.add(char2)
         charList.add(char3)
         charList.add(char4)
         charList.add(char5)
+
+        //Test si l'autorisation à la fonctionnalité "activité physique" a été accepté
         checkForPermissions(android.Manifest.permission.ACTIVITY_RECOGNITION, "activity", ACTIVITY_RECOGNITION_CODE)
 
+        //Modification de l'affichage
         findViewById<TextView>(R.id.goldText).text = player.gold.toString()
         findViewById<TextView>(R.id.xpText).text = player.xp.toString()
         findViewById<TextView>(R.id.goldText).text = player.gold.toString()
@@ -212,6 +231,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         refreshFragment()
     }
 
+    //Test si la permission pour la fonctionnalité "activité physique" est accepté
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -225,18 +245,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         }
     }
 
+    //Test si la permission pour la fonctionnalité "activité physique" est accepté
     fun checkForPermissions(permission: String, name: String, requestCode: Int){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             when{
                 ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {}
-                shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
+               // shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
 
                 else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
             }
         }
     }
 
-    fun showDialog(permission: String, name: String, requestCode: Int){
+   /* fun showDialog(permission: String, name: String, requestCode: Int){
         val builder = AlertDialog.Builder(this)
 
         builder.apply {
@@ -248,7 +269,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         }
         val dialog = builder.create()
         dialog.show()
-    }
+    }*/
+
 
     override fun onSensorChanged(Event: SensorEvent){
         updateGold()
@@ -258,6 +280,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
         println("je ")
     }
 
+    //Active le service de détection de pas
     override fun onResume() {
         super.onResume()
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -266,12 +289,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener, Updatable {
             sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR),
             SensorManager.SENSOR_DELAY_FASTEST);
     }
+    //Met en pause le service de détection de pas
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
     }
 
-    override fun update() {
+    //Fonction qui permet de sauvegarder l'état du joueur et l'état des personnages
+     fun update() {
         PlayerStorage.get(applicationContext).update(1, player)
         CharStorage.get(applicationContext).update(1, char1)
         CharStorage.get(applicationContext).update(2, char2)

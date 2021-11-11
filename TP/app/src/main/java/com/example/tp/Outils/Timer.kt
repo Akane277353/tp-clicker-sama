@@ -56,6 +56,7 @@ class Timer(var mutableLiveData: MutableLiveData<String>, val boost : Int, playe
             }
 
             override fun onFinish() {
+                //Quand le temps est écoulez baisse le multiplicateur de gold gagné en fonction du boost acheté
                 if(boost == 2){
                     player.multiplicateur = player.multiplicateur - 2
                 }
@@ -68,11 +69,5 @@ class Timer(var mutableLiveData: MutableLiveData<String>, val boost : Int, playe
         timer.start()
     }
 
-    fun getTimerState(): LiveData<String> {
-        return mutableLiveData
-    }
 
-    fun getTimerTime() : Int?{
-        return mutableLiveData.value?.toInt()
-    }
 }
