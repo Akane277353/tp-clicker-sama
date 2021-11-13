@@ -125,6 +125,7 @@ class CharPopup(
             findViewById<Button>(R.id.buttonAt3).setVisibility(View.INVISIBLE)
             findViewById<TextView>(R.id.buttonPv).setVisibility(View.INVISIBLE)
             findViewById<Button>(R.id.buyButton).setVisibility(View.VISIBLE)
+            findViewById<Button>(R.id.buyButton).text = currentChar.price.toString()
         }
         else{
             findViewById<Button>(R.id.buyButton).setVisibility(View.INVISIBLE)
