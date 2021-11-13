@@ -326,7 +326,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             when{
                 ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {}
-                
+
                 else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
             }
         }

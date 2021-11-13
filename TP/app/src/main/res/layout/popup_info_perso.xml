@@ -21,14 +21,6 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/error" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:text="attaque 2" />
-
     </androidx.cardview.widget.CardView>
 
     <TextView
