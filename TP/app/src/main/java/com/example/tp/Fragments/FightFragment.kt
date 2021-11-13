@@ -12,6 +12,7 @@ import com.example.tp.Adapter.CharFightAdapter
 import com.example.tp.MainActivity
 import com.example.tp.Model.Fight
 import com.example.tp.Model.PlayableChar
+import com.example.tp.Outils.ObtPib
 import com.example.tp.Popup.FinFightPopup
 import com.example.tp.R
 
@@ -95,7 +96,11 @@ class FightFragment( val context: MainActivity, private val charList: List<Playa
     }
 
     fun back(){
-        FinFightPopup(this, winner).show()
+        val pib = ObtPib(context)
+        var rand = pib.pibrandom()
+        context.ajoutGold(rand)
+        FinFightPopup(this, winner, rand).show()
+
         context.swipe = true
         context.update()
         context.findViewById<LinearLayout>(R.id.layoutTop).setVisibility(View.VISIBLE)

@@ -79,6 +79,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         update() //Sauvegarde
     }
 
+    fun ajoutGold(bonus:Int){
+        player.gold = player.gold + bonus//Augmente le nombre de gold dans le joueur
+        findViewById<TextView>(R.id.goldText).text = player.gold.toString() //Modifie l'affichage
+        update() //Sauvegarde
+    }
+
     fun updateXp(){
         player.xp = player.xp + 10 //Augmente le nombre d xp du joueur
         findViewById<TextView>(R.id.xpText).text = player.xp.toString() //Modifie l'affichage

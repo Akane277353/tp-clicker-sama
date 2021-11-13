@@ -10,7 +10,8 @@ import com.example.tp.R
 
 class FinFightPopup(
     private val adapter: FightFragment,
-    private val winner: Boolean
+    private val winner: Boolean,
+    private val rand: Int
 ): Dialog(adapter.context)  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +31,7 @@ class FinFightPopup(
     private fun setUpCompoment() {
         if (winner){
             findViewById<TextView>(R.id.result).text = "VICTOIRE!"
+            findViewById<TextView>(R.id.gain).text = "vous aves gagné : " + rand.toString()
         }
         else{
             findViewById<TextView>(R.id.result).text = "DEFAITE..."

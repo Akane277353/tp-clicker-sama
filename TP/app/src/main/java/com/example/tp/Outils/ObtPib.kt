@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.tp.MainActivity
 import com.example.tp.Model.PibPays
+import kotlin.random.Random.Default.nextInt
 
 class ObtPib(var context: MainActivity) {
 
@@ -456,5 +457,11 @@ class ObtPib(var context: MainActivity) {
             }
         }
         return 1
+    }
+
+    fun pibrandom():Int{
+        var liste = init()
+        var rand = nextInt(0, liste.size)
+        return liste[rand].pib
     }
 }
