@@ -37,13 +37,9 @@ import android.util.Log
 import java.io.IOException
 import java.lang.IllegalArgumentException
 
-
-
-
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var layout: LinearLayout
-
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -51,7 +47,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         var pays = "Inconnue"
     }
 
-    val pib = ObtPib()
+    val pib = ObtPib(this)
     var multi = 1
 
     var swipe = true
@@ -74,14 +70,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     lateinit var sensorManager :SensorManager
 
-
-
-
     private var updateFragment = UpdateFragment(this, charList)
 
     //Fonction qui update le nombre de gold
     fun updateGold(){
-        player.gold = player.gold + 10 * player.multiplicateur //Augmente le nombre de gold dans le joueur
+        player.gold = (player.gold + 10 * player.multiplicateur) * multi//Augmente le nombre de gold dans le joueur
         findViewById<TextView>(R.id.goldText).text = player.gold.toString() //Modifie l'affichage
         update() //Sauvegarde
     }
@@ -171,7 +164,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         trans.commit()
         updateFragment.updateCurFrag("home")
 
-
         //PlayerStorage.get(applicationContext).clear()
         //Si c'est la première fois que le jeu est lancé il n'y a pas de joueur sauvegarder donc il est créer
         if(PlayerStorage.get(applicationContext).size() == 0) {
@@ -186,6 +178,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
          */
 
         multi = pib.getPib(pays)
+        Toast.makeText(this, multi.toString(), Toast.LENGTH_SHORT).show()
 
         if(CharStorage.get(applicationContext).size() != 5) {
             char1 = PlayableChar(
@@ -213,7 +206,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 999, 66666, 66666, 666, false, true,999999999
             )
 
-
             CharStorage.get(applicationContext).insert(char1)
             CharStorage.get(applicationContext).insert(char2)
             CharStorage.get(applicationContext).insert(char3)
@@ -227,8 +219,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             char3 = CharStorage.get(applicationContext).findAll()[2]
             char4 = CharStorage.get(applicationContext).findAll()[3]
             char5 = CharStorage.get(applicationContext).findAll()[4]
-
-
         }
 
         //Ajout des personnages à la liste des personnages existant
@@ -246,7 +236,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         findViewById<TextView>(R.id.goldText).text = player.gold.toString()
         findViewById<TextView>(R.id.xpText).text = player.xp.toString()
         findViewById<TextView>(R.id.goldText).text = player.gold.toString()
-
 
         layout = findViewById(R.id.main_activity)
         layout.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
@@ -274,7 +263,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
         task.addOnSuccessListener {
             if(it != null){
-                Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_LONG).show()
                 val geocoder = Geocoder(this, Locale.getDefault())
 
                 var adresses: List<Address>? = null
@@ -299,15 +287,16 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     for (i in 0..adresse.getMaxAddressLineIndex()) {
                         addressFragments.add(adresse.getAddressLine(i))
                     }
-                    Toast.makeText(this, adresse.countryName, Toast.LENGTH_LONG).show()
                     pays = adresse.countryName
+                    Log.d("pays", pays)
+                    multi = pib.getPib(pays)
+                    Toast.makeText(this, multi.toString(), Toast.LENGTH_SHORT).show()
 
                     Log.d(
                         "GPS",
                         TextUtils.join(System.getProperty("line.separator"), addressFragments)
                     )
                 }
-
             }
         }
     }
@@ -329,9 +318,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     fun checkForPermissions(permission: String, name: String, requestCode: Int){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             when{
-
                 ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {}
-
 
                 //shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
 

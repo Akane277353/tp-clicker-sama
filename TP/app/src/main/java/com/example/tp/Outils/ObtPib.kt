@@ -1,12 +1,15 @@
 package com.example.tp.Outils
 
+import android.util.Log
+import android.widget.Toast
+import com.example.tp.MainActivity
 import com.example.tp.Model.PibPays
 
-class ObtPib {
+class ObtPib(var context: MainActivity) {
 
     var listP = arrayListOf<PibPays>()
 
-    fun getPib(){
+    fun getPib(pays:String):Int{
         var pays0 = PibPays( "Afghanistan", 19807)
         listP.add(pays0)
         var pays1 = PibPays( "Afrique du Sud", 301923)
@@ -438,17 +441,15 @@ class ObtPib {
         var pays216 = PibPays( "Zimbabwe", 16768)
         listP.add(pays216)
 
-    }
-
-    fun getPib(pays: String): Int{
         for (el in listP){
-            if (pays == el.pays.uppercase()){
+            if (pays.lowercase() == el.pays.lowercase()){
                 if (el.pib / 1000 <= 1){
                     return 1
                 }
                 else{
                     return (el.pib/1000).toInt()
                 }
+                Log.d("pays", el.pays)
             }
         }
         return 1
