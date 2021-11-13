@@ -10,7 +10,8 @@ open class Player (
     var xp: Int,
     var nbClique: Int,
     var nbPerso: Int,
-    var multiplicateur: Int
+    var multiplicateur: Int,
+    var detecteurPas: Boolean
 ): Serializable {
     companion object {
         const val PLAYER_ID = "id"
@@ -20,5 +21,6 @@ open class Player (
         const val PLAYER_NBCLIQUE = "nbClique"
         const val PLAYER_NBPERSO = "nbPerso"
         const val PLAYER_MULTIPLICATEUR = "multiplicateur"
+        const val DETECTEUR_PAS = "detecteurPas"
     }
 }

@@ -2,6 +2,7 @@ package com.example.tp.Stockage
 
 import android.content.Context
 import com.example.tp.Model.Player
+import com.example.tp.Model.Player.Companion.DETECTEUR_PAS
 import com.example.tp.Model.Player.Companion.PLAYER_GOLD
 import com.example.tp.Model.Player.Companion.PLAYER_ID
 import com.example.tp.Model.Player.Companion.PLAYER_MULTIPLICATEUR
@@ -25,7 +26,7 @@ class PlayerJSONFileStorage  private constructor(context: Context):
         }
     }
     override fun create(id: Int, obj: Player): Player{
-        return Player(obj.id, obj.pseudo, obj.gold, obj.xp, obj.nbClique, obj.nbPerso, obj.multiplicateur)
+        return Player(obj.id, obj.pseudo, obj.gold, obj.xp, obj.nbClique, obj.nbPerso, obj.multiplicateur, obj.detecteurPas)
     }
 
     override fun objectToJson(id: Int, obj: Player): JSONObject {
@@ -37,6 +38,7 @@ class PlayerJSONFileStorage  private constructor(context: Context):
         jsonObject.put(PLAYER_NBCLIQUE, obj.nbClique)
         jsonObject.put(PLAYER_NBPERSO, obj.nbPerso)
         jsonObject.put(PLAYER_MULTIPLICATEUR, obj.multiplicateur)
+        jsonObject.put(DETECTEUR_PAS, obj.detecteurPas)
         return jsonObject
     }
 
@@ -48,7 +50,8 @@ class PlayerJSONFileStorage  private constructor(context: Context):
             json.get(PLAYER_XP) as Int,
             json.get(PLAYER_NBCLIQUE) as Int,
             json.get(PLAYER_NBPERSO) as Int,
-            json.get(PLAYER_MULTIPLICATEUR) as Int
+            json.get(PLAYER_MULTIPLICATEUR) as Int,
+            json.get(DETECTEUR_PAS) as Boolean
         )
     }
 }

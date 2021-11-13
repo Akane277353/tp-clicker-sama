@@ -1,17 +1,19 @@
 package com.example.tp
 
+import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.location.Geocoder
+import android.location.Location
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
@@ -23,12 +25,31 @@ import com.example.tp.Outils.Timer
 import com.example.tp.Outils.OnSwipeTouchListener
 import com.example.tp.Stockage.CharStorage
 import com.example.tp.Stockage.PlayerStorage
+import com.google.android.gms.tasks.Task
+import java.util.*
+import kotlin.collections.ArrayList
+import android.widget.Toast
+import android.location.Address
+import com.google.android.gms.location.*
+import android.text.TextUtils
+import android.util.Log
+import java.io.IOException
+import java.lang.IllegalArgumentException
 
-private const val ACTIVITY_RECOGNITION_CODE: Int = 1
+
+
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var layout: LinearLayout
+
+
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    companion object{
+        var pays = "Inconnue"
+    }
+
 
     var multi = 1
 
@@ -38,7 +59,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     //Création du joueur
     var player = Player(
-        1,"Gontran", 800000, 0, 0, 0, 1
+        1,"Gontran", 800000, 0, 0, 0, 1, false
     )
 
     //Création des variables des personnages
@@ -49,7 +70,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     lateinit var char5 :PlayableChar
 
     //Création de la variable sensorManager
+
     lateinit var sensorManager :SensorManager
+
+
 
 
     private var updateFragment = UpdateFragment(this, charList)
@@ -140,6 +164,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         trans.commit()
         updateFragment.updateCurFrag("home")
 
+
         //PlayerStorage.get(applicationContext).clear()
         //Si c'est la première fois que le jeu est lancé il n'y a pas de joueur sauvegarder donc il est créer
         if(PlayerStorage.get(applicationContext).size() == 0) {
@@ -149,8 +174,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         else{
             player = PlayerStorage.get(applicationContext).findAll()[0]
         }
-        //PlayerStorage.get(applicationContext).clear()
-
         /* Si c'est la première fois que le jeu est lancer on créer les personnages
             puis on les ajoutes à la sauvegarde
          */
@@ -207,8 +230,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         charList.add(char4)
         charList.add(char5)
 
-        //Test si l'autorisation à la fonctionnalité "activité physique" a été accepté
-        checkForPermissions(android.Manifest.permission.ACTIVITY_RECOGNITION, "activity", ACTIVITY_RECOGNITION_CODE)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+        fetchLocation()
 
         //Modification de l'affichage
         findViewById<TextView>(R.id.goldText).text = player.gold.toString()
@@ -231,6 +255,56 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         refreshFragment()
     }
 
+    private fun fetchLocation() {
+        val task:Task<Location> = fusedLocationProviderClient.lastLocation
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            //ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 101)
+            checkForPermissions(android.Manifest.permission.ACCESS_FINE_LOCATION, "activity", 101)
+            //fetchLocation()
+
+        }
+        task.addOnSuccessListener {
+            if(it != null){
+                Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_LONG).show()
+                val geocoder = Geocoder(this, Locale.getDefault())
+
+                var adresses: List<Address>? = null
+                try {
+                    adresses = geocoder.getFromLocation(
+                        it.latitude,
+                        it.longitude,
+                        1
+                    )
+                } catch (ioException: IOException) {
+                    Log.e("GPS", "erreur", ioException)
+                } catch (illegalArgumentException: IllegalArgumentException) {
+                    Log.e("GPS", "erreur", illegalArgumentException)
+                }
+
+                if (adresses == null || adresses.size == 0) {
+                    Log.e("GPS", "erreur aucune adresse !")
+                    Toast.makeText(this, "erreur aucune adresse", Toast.LENGTH_LONG).show()
+                } else {
+                    val adresse: Address = adresses[0]
+                    val addressFragments = ArrayList<String?>()
+                    for (i in 0..adresse.getMaxAddressLineIndex()) {
+                        addressFragments.add(adresse.getAddressLine(i))
+                    }
+                    Toast.makeText(this, adresse.countryName, Toast.LENGTH_LONG).show()
+                    pays = adresse.countryName
+
+                    Log.d(
+                        "GPS",
+                        TextUtils.join(System.getProperty("line.separator"), addressFragments)
+                    )
+                }
+
+            }
+        }
+    }
+
+
     //Test si la permission pour la fonctionnalité "activité physique" est accepté
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -238,10 +312,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == ACTIVITY_RECOGNITION_CODE){
-            if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
-                updateGold()
-            }
+        if (requestCode == 101 && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            fetchLocation()
         }
     }
 
@@ -249,8 +321,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     fun checkForPermissions(permission: String, name: String, requestCode: Int){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             when{
+
                 ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {}
-               // shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
+
+
+                //shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
 
                 else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
             }
@@ -273,23 +348,36 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
 
     override fun onSensorChanged(Event: SensorEvent){
-        updateGold()
+        if (player.detecteurPas == true){
+            updateGold()
+
+        }
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
-        println("je ")
+        if (player.detecteurPas == true){
+            updateGold()
+        }
     }
-
+    //Met en pause le service de détection de pas
+    fun unregisterSensor(){
+        sensorManager.unregisterListener(this)
+    }
     //Active le service de détection de pas
-    override fun onResume() {
-        super.onResume()
+    fun registerSensor(){
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager.registerListener(
             this,
             sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR),
-            SensorManager.SENSOR_DELAY_FASTEST);
+            SensorManager.SENSOR_DELAY_FASTEST)
     }
-    //Met en pause le service de détection de pas
+
+
+    override fun onResume() {
+        super.onResume()
+        registerSensor()
+    }
+
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
@@ -304,6 +392,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         CharStorage.get(applicationContext).update(4, char4)
         CharStorage.get(applicationContext).update(5, char5)
     }
+
+
 
     fun refreshFragment(){
         updateFragment.goTeam(true)
