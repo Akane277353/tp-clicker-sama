@@ -35,37 +35,38 @@ class CharTeamAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentChar = charList[position]
 
-            if (pos){
-                if (currentChar.team == true){
-                    if (currentChar.name == "jsp") {
-                        holder.charImage.setImageResource(R.mipmap.sombra)
-                    }
-                    else if (currentChar.name == "dude") {
-                        holder.charImage.setImageResource(R.mipmap.ashe)
-                    }
-                    else if (currentChar.name == "bob") {
-                        holder.charImage.setImageResource(R.mipmap.heights)
-                    }
-                    holder.itemView.setOnClickListener{
-                        CharPopup(this, currentChar, context2).show()
-                    }
-                }
-            }
-        else{
-                if (currentChar.name == "jsp") {
-                    holder.charImage.setImageResource(R.mipmap.sombra)
-                }
-                else if (currentChar.name == "dude") {
-                    holder.charImage.setImageResource(R.mipmap.ashe)
-                }
-                else if (currentChar.name == "bob") {
-                    holder.charImage.setImageResource(R.mipmap.heights)
-                }
+        afficheimg(currentChar, holder)
 
+        if (pos){
+            if (currentChar.team == true){
                 holder.itemView.setOnClickListener{
                     CharPopup(this, currentChar, context2).show()
                 }
             }
+        }
+        else{
+            holder.itemView.setOnClickListener{
+                CharPopup(this, currentChar, context2).show()
+            }
+        }
+    }
+
+    fun afficheimg(currentChar: PlayableChar, holder: ViewHolder){
+        if (currentChar.name == "Giusepe") {
+            holder.charImage.setImageResource(R.mipmap.giusepe)
+        }
+        else if (currentChar.name == "Rigobert") {
+            holder.charImage.setImageResource(R.mipmap.rigobert)
+        }
+        else if (currentChar.name == "George") {
+            holder.charImage.setImageResource(R.mipmap.george)
+        }
+        else if (currentChar.name == "Semi Chips") {
+            holder.charImage.setImageResource(R.mipmap.semi_chips)
+        }
+        else if (currentChar.name == "404 Error") {
+            holder.charImage.setImageResource(R.mipmap.error)
+        }
     }
 
     override fun getItemCount(): Int = charList.size

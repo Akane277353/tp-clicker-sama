@@ -97,26 +97,25 @@ class CharPopup(
     private fun setUpCompoment() {
         val image = findViewById<ImageView>(R.id.imgItem)
 
+        afficheimg(currentChar, image)
+
         findViewById<TextView>(R.id.nameChar).text = currentChar.name
         findViewById<TextView>(R.id.pv).text = currentChar.hp.toString()
 
+        findViewById<Button>(R.id.buyButton).setVisibility(View.INVISIBLE)
+        findViewById<TextView>(R.id.degat1).text = currentChar.dam1.toString()
+        findViewById<TextView>(R.id.degat2).text = currentChar.dam2.toString()
+        findViewById<TextView>(R.id.degat3).text = currentChar.dam3.toString()
 
-            findViewById<Button>(R.id.buyButton).setVisibility(View.INVISIBLE)
-            findViewById<TextView>(R.id.degat1).text = currentChar.dam1.toString()
-            findViewById<TextView>(R.id.degat2).text = currentChar.dam2.toString()
-            findViewById<TextView>(R.id.degat3).text = currentChar.dam3.toString()
-
-            if (currentChar.name != "404 Error") {
-                findViewById<TextView>(R.id.buttonPv).text = (currentChar.hp * 100).toString()
-            }
-            else{
-                findViewById<TextView>(R.id.buttonPv).setVisibility(View.INVISIBLE)
-            }
-            findViewById<TextView>(R.id.buttonAt1).text = (currentChar.attack1Level * 1000 * context2.context.multi).toString()
-            findViewById<TextView>(R.id.buttonAt2).text = (currentChar.attack2Level * 1000 * context2.context.multi).toString()
-            findViewById<TextView>(R.id.buttonAt3).text = (currentChar.attack3Level * 1000 * context2.context.multi).toString()
-
-
+        if (currentChar.name != "404 Error") {
+            findViewById<TextView>(R.id.buttonPv).text = (currentChar.hp * 100).toString()
+        }
+        else{
+            findViewById<TextView>(R.id.buttonPv).setVisibility(View.INVISIBLE)
+        }
+        findViewById<TextView>(R.id.buttonAt1).text = (currentChar.attack1Level * 1000 * context2.context.multi).toString()
+        findViewById<TextView>(R.id.buttonAt2).text = (currentChar.attack2Level * 1000 * context2.context.multi).toString()
+        findViewById<TextView>(R.id.buttonAt3).text = (currentChar.attack3Level * 1000 * context2.context.multi).toString()
 
         if (!currentChar.buy){
             findViewById<Button>(R.id.teamButton).setVisibility(View.INVISIBLE)
@@ -129,6 +128,24 @@ class CharPopup(
         }
         else{
             findViewById<Button>(R.id.buyButton).setVisibility(View.INVISIBLE)
+        }
+    }
+
+    fun afficheimg(currentChar: PlayableChar, image: ImageView){
+        if (currentChar.name == "Giusepe") {
+            image.setImageResource(R.mipmap.giusepe)
+        }
+        else if (currentChar.name == "Rigobert") {
+            image.setImageResource(R.mipmap.rigobert)
+        }
+        else if (currentChar.name == "George") {
+            image.setImageResource(R.mipmap.george)
+        }
+        else if (currentChar.name == "Semi Chips") {
+            image.setImageResource(R.mipmap.semi_chips)
+        }
+        else if (currentChar.name == "404 Error") {
+            image.setImageResource(R.mipmap.error)
         }
     }
 

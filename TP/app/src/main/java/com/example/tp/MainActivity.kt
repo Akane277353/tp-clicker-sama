@@ -202,7 +202,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             )
 
             char3 =  PlayableChar(
-                3, "George Ducoup", 3000, 30, 40,
+                3, "George", 3000, 30, 40,
                 50, 1, 1, 1, false, false,75000
             )
 

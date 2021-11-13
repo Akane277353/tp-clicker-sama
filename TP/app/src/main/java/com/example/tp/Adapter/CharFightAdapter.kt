@@ -40,33 +40,18 @@ class CharFightAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentChar = charList[position]
 
+        afficheimg(currentChar, holder)
+
         holder.charText.text = currentChar.hp.toString()
         if (pos){
             holder.textNo.text = currentChar.name
             holder.textAt.setVisibility(View.INVISIBLE)
             holder.textEn.setVisibility(View.INVISIBLE)
-            if (currentChar.name == "jsp") {
-                holder.charImage.setImageResource(R.mipmap.sombra)
-            }
-            else if (currentChar.name == "dude") {
-                holder.charImage.setImageResource(R.mipmap.ashe)
-            }
-            else if (currentChar.name == "bob") {
-                holder.charImage.setImageResource(R.mipmap.heights)
-            }
+
         }
         else{
             holder.textNo.setVisibility(View.INVISIBLE)
             holder.textEn.text = context2.ennemiName(currentChar)
-            if (currentChar.name == "jsp") {
-                holder.charImage.setImageResource(R.mipmap.sombra)
-            }
-            else if (currentChar.name == "dude") {
-                holder.charImage.setImageResource(R.mipmap.ashe)
-            }
-            else if (currentChar.name == "bob") {
-                holder.charImage.setImageResource(R.mipmap.heights)
-            }
 
             if(currentChar.hp > 0){
                 if (context2.nbAttaque(currentChar) == 0){
@@ -86,6 +71,24 @@ class CharFightAdapter(
                 holder.textAt.setVisibility(View.INVISIBLE)
                 holder.textEn.text = ""
             }
+        }
+    }
+
+    fun afficheimg(currentChar: PlayableChar, holder: ViewHolder){
+        if (currentChar.name == "Giusepe") {
+            holder.charImage.setImageResource(R.mipmap.giusepe)
+        }
+        else if (currentChar.name == "Rigobert") {
+            holder.charImage.setImageResource(R.mipmap.rigobert)
+        }
+        else if (currentChar.name == "George") {
+            holder.charImage.setImageResource(R.mipmap.george)
+        }
+        else if (currentChar.name == "Semi Chips") {
+            holder.charImage.setImageResource(R.mipmap.semi_chips)
+        }
+        else if (currentChar.name == "404 Error") {
+            holder.charImage.setImageResource(R.mipmap.error)
         }
     }
 
