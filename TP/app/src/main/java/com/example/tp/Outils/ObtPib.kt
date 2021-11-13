@@ -443,8 +443,14 @@ class ObtPib {
     fun getPib(pays: String): Int{
         for (el in listP){
             if (pays == el.pays.uppercase()){
-                return el.pib
+                if (el.pib / 1000 <= 1){
+                    return 1
+                }
+                else{
+                    return (el.pib/1000).toInt()
+                }
             }
         }
+        return 1
     }
 }
