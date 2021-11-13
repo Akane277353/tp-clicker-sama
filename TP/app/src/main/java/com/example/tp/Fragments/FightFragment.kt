@@ -48,7 +48,6 @@ class FightFragment( val context: MainActivity, private val charList: List<Playa
 
     fun button(view: View){
         view.findViewById<Button>(R.id.terminer).setOnClickListener {
-            charList[0].hp = 0
             for (plr in listAttaque){
                 if (envie(plr)){
                     attaque(plr)
@@ -152,8 +151,9 @@ class FightFragment( val context: MainActivity, private val charList: List<Playa
         }
         if (pven <= 0){
             winner = true
+            context.updateXp()
         }
-        else{
+        else if (pvplr <= 0){
             winner = false
         }
         return pven <= 0 || pvplr <= 0

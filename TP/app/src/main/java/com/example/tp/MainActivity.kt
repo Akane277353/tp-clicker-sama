@@ -61,6 +61,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         update() //Sauvegarde
     }
 
+    fun updateXp(){
+        player.xp = player.xp + 10 //Augmente le nombre d xp du joueur
+        findViewById<TextView>(R.id.xpText).text = player.xp.toString() //Modifie l'affichage
+        update() //Sauvegarde
+    }
+
     //Fonction qui update les personnage dans la liste
     fun updateChar(newChar: PlayableChar, pos: Int){
         charList[pos] = newChar
