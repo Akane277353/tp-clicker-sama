@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     //Création du joueur
     var player = Player(
-        1,"Gontran", 800000, 0, 0, 0, 1, false
+        1,"Gontran", 0, 1, 0, 0, 1, false
     )
 
     //Création des variables des personnages
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     //Fonction qui update le nombre de gold
     fun updateGold(){
-        player.gold = (player.gold + 10 * player.multiplicateur) * multi//Augmente le nombre de gold dans le joueur
+        player.gold = player.gold + 10 * player.multiplicateur + multi//Augmente le nombre de gold dans le joueur
         findViewById<TextView>(R.id.goldText).text = player.gold.toString() //Modifie l'affichage
         update() //Sauvegarde
     }
@@ -82,6 +82,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     fun updateXp(){
         player.xp = player.xp + 10 //Augmente le nombre d xp du joueur
         findViewById<TextView>(R.id.xpText).text = player.xp.toString() //Modifie l'affichage
+        update() //Sauvegarde
+    }
+
+    fun updatenbChar(){
+        player.nbPerso = player.nbPerso + 1 //Augmente le nombre d xp du joueur
         update() //Sauvegarde
     }
 
@@ -183,27 +188,27 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         if(CharStorage.get(applicationContext).size() != 5) {
             char1 = PlayableChar(
                 1, "Giusepe", 1000, 100, 150,
-                250, 0, 0, 0, true, true,0
+                250, 0, 0, 0, false, false,10000
             )
 
             char2 =  PlayableChar(
                 2, "Rigobert", 1750, 101, 150,
-                150, 1, 1, 1, false, true,5000
+                150, 1, 1, 1, false, false,50000
             )
 
             char3 =  PlayableChar(
                 3, "George Ducoup", 3000, 30, 40,
-                50, 1, 1, 1, false, true,7500
+                50, 1, 1, 1, false, false,75000
             )
 
             char4 = PlayableChar(
                 4,"Semi Chips", 450, 350, 450,
-                400, 1, 1, 1, false, false,10000
+                400, 1, 1, 1, false, false,110000
             )
 
             char5 = PlayableChar(
                 5,"404 Error", 1, 3333333, 66666,
-                999, 66666, 66666, 666, false, true,999999999
+                999, 66666, 66666, 666, false, false,999999999
             )
 
             CharStorage.get(applicationContext).insert(char1)

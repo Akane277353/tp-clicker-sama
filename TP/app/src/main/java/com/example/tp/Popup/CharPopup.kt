@@ -78,6 +78,7 @@ class CharPopup(
         }
         findViewById<Button>(R.id.buyButton).setOnClickListener{
             if (context2.context.player.gold >= currentChar.price){
+                context2.context.updatenbChar()
                 var char = currentChar
                 currentChar.buy = true
                 context2.updateChar(char, currentChar, char.price)
