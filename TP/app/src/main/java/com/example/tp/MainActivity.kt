@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import com.example.tp.Fragments.*
 import com.example.tp.Model.PlayableChar
 import com.example.tp.Model.Player
+import com.example.tp.Outils.ObtPib
 import com.example.tp.Outils.Timer
 import com.example.tp.Outils.OnSwipeTouchListener
 import com.example.tp.Stockage.CharStorage
@@ -29,6 +30,8 @@ private const val ACTIVITY_RECOGNITION_CODE: Int = 1
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var layout: LinearLayout
+
+    val pib = ObtPib()
 
     var multi = 1
 
@@ -160,9 +163,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         /* Si c'est la première fois que le jeu est lancer on créer les personnages
             puis on les ajoutes à la sauvegarde
          */
+
+        multi = pib.getPib(pays)
+
         if(CharStorage.get(applicationContext).size() != 5) {
-
-
             char1 = PlayableChar(
                 1, "Giusepe", 1000, 100, 150,
                 250, 0, 0, 0, true, true,0
