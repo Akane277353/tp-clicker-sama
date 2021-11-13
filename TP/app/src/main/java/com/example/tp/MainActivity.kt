@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer
 import com.example.tp.Fragments.*
 import com.example.tp.Model.PlayableChar
 import com.example.tp.Model.Player
+import com.example.tp.Outils.ObtPib
 import com.example.tp.Outils.Timer
 import com.example.tp.Outils.OnSwipeTouchListener
 import com.example.tp.Stockage.CharStorage
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         var pays = "Inconnue"
     }
 
-
+    val pib = ObtPib()
     var multi = 1
 
     var swipe = true
@@ -82,6 +83,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     fun updateGold(){
         player.gold = player.gold + 10 * player.multiplicateur //Augmente le nombre de gold dans le joueur
         findViewById<TextView>(R.id.goldText).text = player.gold.toString() //Modifie l'affichage
+        update() //Sauvegarde
+    }
+
+    fun updateXp(){
+        player.xp = player.xp + 10 //Augmente le nombre d xp du joueur
+        findViewById<TextView>(R.id.xpText).text = player.xp.toString() //Modifie l'affichage
         update() //Sauvegarde
     }
 
@@ -177,9 +184,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         /* Si c'est la première fois que le jeu est lancer on créer les personnages
             puis on les ajoutes à la sauvegarde
          */
+
+        multi = pib.getPib(pays)
+
         if(CharStorage.get(applicationContext).size() != 5) {
-
-
             char1 = PlayableChar(
                 1, "Giusepe", 1000, 100, 150,
                 250, 0, 0, 0, true, true,0

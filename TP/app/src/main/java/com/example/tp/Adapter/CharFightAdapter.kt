@@ -26,6 +26,7 @@ class CharFightAdapter(
         val charText = view.findViewById<TextView>(R.id.pvPerso)
         val textAt = view.findViewById<TextView>(R.id.attaque)
         val textEn = view.findViewById<TextView>(R.id.ennemi)
+        val textNo = view.findViewById<TextView>(R.id.nom)
     }
 
     private fun defView(parent: ViewGroup): View{
@@ -41,6 +42,7 @@ class CharFightAdapter(
 
         holder.charText.text = currentChar.hp.toString()
         if (pos){
+            holder.textNo.text = currentChar.name
             holder.textAt.setVisibility(View.INVISIBLE)
             holder.textEn.setVisibility(View.INVISIBLE)
             if (currentChar.name == "jsp") {
@@ -54,6 +56,7 @@ class CharFightAdapter(
             }
         }
         else{
+            holder.textNo.setVisibility(View.INVISIBLE)
             holder.textEn.text = context2.ennemiName(currentChar)
             if (currentChar.name == "jsp") {
                 holder.charImage.setImageResource(R.mipmap.sombra)
