@@ -26,12 +26,13 @@ class Shop( var context: MainActivity) : Fragment() {
         }
 
         //Quand le bouton est cliqué, appel la fonction pour triplé l'or gagné
-        view.findViewById<Button>(R.id.tripleOr).text ="Double l'or par clique    Durée : 10 min Coût : "+  (1000 * context.multi/10).toString() +" Gold"
+        view.findViewById<Button>(R.id.tripleOr).text ="Triple l'or par clique    Durée : 5 min Coût : "+  (1000 * context.multi/10).toString() +" Gold"
         view.findViewById<Button>(R.id.tripleOr).setOnClickListener {
             context.tripleOr()
         }
 
         //Quand le bouton est cliqué, appel la fonction pour cliquer automatiquement
+        view.findViewById<Button>(R.id.cliqueAuto).text ="Clique automatique Durée : 30 min Coût : "+  (5000 * context.multi/10).toString() +" Gold"
         view.findViewById<Button>(R.id.cliqueAuto).setOnClickListener {
             context.cliqueAuto()
         }

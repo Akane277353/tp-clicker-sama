@@ -144,10 +144,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     /*Fonction utilisé dans le shop qui permet d'avoir un clique automatique (le joueur n'as
     pas besoin d'appuyer sur le bouton pour gagner des gold)*/
     fun cliqueAuto(){
-        if (player.gold >= 2000){
+        if (player.gold >= 2000*multi/10){
             val liveData: MutableLiveData<String> = MutableLiveData()
             val customCountDownTimer = Timer(liveData, 0, player)
-            player.gold = player.gold - 2000
+            player.gold = player.gold - 2000*multi/10
             customCountDownTimer.start(1800) //Epoch timestamp
             customCountDownTimer.mutableLiveData.observe(this, Observer { counterState ->
                 counterState?.let {
