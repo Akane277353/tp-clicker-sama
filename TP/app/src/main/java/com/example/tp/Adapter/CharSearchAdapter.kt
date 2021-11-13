@@ -28,7 +28,6 @@ class CharSearchAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-
         return ViewHolder(defView(parent))
     }
 
@@ -55,8 +54,5 @@ class CharSearchAdapter(
             holder.charImage.setImageResource(R.mipmap.error)
         }
     }
-
     override fun getItemCount(): Int = charList.size
-
-
 }

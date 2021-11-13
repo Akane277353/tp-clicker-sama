@@ -326,28 +326,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             when{
                 ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {}
-
-                //shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
-
+                
                 else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
             }
         }
     }
-
-   /* fun showDialog(permission: String, name: String, requestCode: Int){
-        val builder = AlertDialog.Builder(this)
-
-        builder.apply {
-            setMessage("Permission Activité physique")
-            setTitle("Permission required")
-            setPositiveButton("OK") {dialog, which ->
-                ActivityCompat.requestPermissions(this@MainActivity, arrayOf(permission), requestCode)
-            }
-        }
-        val dialog = builder.create()
-        dialog.show()
-    }*/
-
 
     override fun onSensorChanged(Event: SensorEvent){
         if (player.detecteurPas == true){

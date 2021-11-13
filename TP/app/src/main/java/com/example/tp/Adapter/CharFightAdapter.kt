@@ -75,6 +75,8 @@ class CharFightAdapter(
     }
 
     fun afficheimg(currentChar: PlayableChar, holder: ViewHolder){
+
+        //ally img
         if (currentChar.name == "Giusepe") {
             holder.charImage.setImageResource(R.mipmap.giusepe)
         }
@@ -89,6 +91,41 @@ class CharFightAdapter(
         }
         else if (currentChar.name == "404 Error") {
             holder.charImage.setImageResource(R.mipmap.error)
+        }
+
+        //ennemi img
+        else if (currentChar.name == "Rodriguez") {
+            holder.charImage.setImageResource(R.mipmap.rodriguez)
+        }
+        else if (currentChar.name == "Natacha") {
+            holder.charImage.setImageResource(R.mipmap.natacha)
+        }
+        else if (currentChar.name == "Gontran") {
+            holder.charImage.setImageResource(R.mipmap.gontran)
+        }
+        else if (currentChar.name == "Juste") {
+            holder.charImage.setImageResource(R.mipmap.juste)
+        }
+        else if (currentChar.name == "Ananie") {
+            holder.charImage.setImageResource(R.mipmap.ananie)
+        }
+        else if (currentChar.name == "Martine") {
+            holder.charImage.setImageResource(R.mipmap.martine)
+        }
+        else if (currentChar.name == "Basile") {
+            holder.charImage.setImageResource(R.mipmap.basile)
+        }
+        else if (currentChar.name == "Judith") {
+            holder.charImage.setImageResource(R.mipmap.judith)
+        }
+        else if (currentChar.name == "Muchacho") {
+            holder.charImage.setImageResource(R.mipmap.muchacho)
+        }
+        else if (currentChar.name == "Peperoni") {
+            holder.charImage.setImageResource(R.mipmap.peperoni)
+        }
+        else if (currentChar.name == "Sabrina") {
+            holder.charImage.setImageResource(R.mipmap.sabrina)
         }
     }
 
