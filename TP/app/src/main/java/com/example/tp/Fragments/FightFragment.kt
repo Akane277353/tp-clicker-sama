@@ -12,11 +12,14 @@ import com.example.tp.Adapter.CharFightAdapter
 import com.example.tp.MainActivity
 import com.example.tp.Model.Fight
 import com.example.tp.Model.PlayableChar
+import com.example.tp.Popup.FinFightPopup
 import com.example.tp.R
 
-class FightFragment( private val context: MainActivity, private val charList: List<PlayableChar>, private val ennemi: List<PlayableChar>) : Fragment() {
+class FightFragment( val context: MainActivity, private val charList: List<PlayableChar>, private val ennemi: List<PlayableChar>) : Fragment() {
 
     var listAttaque = arrayListOf<Fight>()
+
+    var winner= false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,11 +44,11 @@ class FightFragment( private val context: MainActivity, private val charList: Li
         val charRecyclerViewBottom = view?.findViewById<RecyclerView>(R.id.charRecyclerViewBottom)
         charRecyclerView?.adapter = CharFightAdapter(ennemi, charList, context, this, view, true)
         charRecyclerViewBottom?.adapter = CharFightAdapter(charList, ennemi, context, this, view, false)
-
-
     }
+
     fun button(view: View){
         view.findViewById<Button>(R.id.terminer).setOnClickListener {
+            charList[0].hp = 0
             for (plr in listAttaque){
                 if (envie(plr)){
                     attaque(plr)
@@ -93,6 +96,7 @@ class FightFragment( private val context: MainActivity, private val charList: Li
     }
 
     fun back(){
+        FinFightPopup(this, winner).show()
         context.swipe = true
         context.update()
         context.findViewById<LinearLayout>(R.id.layoutTop).setVisibility(View.VISIBLE)
@@ -145,6 +149,12 @@ class FightFragment( private val context: MainActivity, private val charList: Li
         }
         for (plr in charList){
             pvplr = pvplr + plr.hp
+        }
+        if (pven <= 0){
+            winner = true
+        }
+        else{
+            winner = false
         }
         return pven <= 0 || pvplr <= 0
     }
