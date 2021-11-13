@@ -449,7 +449,6 @@ class ObtPib(var context: MainActivity) {
                 else{
                     return (el.pib/1000).toInt()
                 }
-                Log.d("pays", el.pays)
             }
         }
         return 1

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.tp.MainActivity
 import com.example.tp.R
 
-class Shop( context: Context) : Fragment() {
+class Shop( var context: MainActivity) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,18 +20,20 @@ class Shop( context: Context) : Fragment() {
         val view = inflater.inflate(R.layout.activity_shop, container, false)
 
         //Quand le bouton est cliqué, appel la fonction pour doubler l'or gagné
+        view.findViewById<Button>(R.id.doubleOr).text ="Double l'or par clique    Durée : 10 min Coût : "+  (300 * context.multi/10).toString() +" Gold"
         view.findViewById<Button>(R.id.doubleOr).setOnClickListener {
-            (activity as MainActivity?)?.doubleOr()
+            context.doubleOr()
         }
 
         //Quand le bouton est cliqué, appel la fonction pour triplé l'or gagné
+        view.findViewById<Button>(R.id.tripleOr).text ="Double l'or par clique    Durée : 10 min Coût : "+  (1000 * context.multi/10).toString() +" Gold"
         view.findViewById<Button>(R.id.tripleOr).setOnClickListener {
-            (activity as MainActivity?)?.tripleOr()
+            context.tripleOr()
         }
 
         //Quand le bouton est cliqué, appel la fonction pour cliquer automatiquement
         view.findViewById<Button>(R.id.cliqueAuto).setOnClickListener {
-            (activity as MainActivity?)?.cliqueAuto()
+            context.cliqueAuto()
         }
 
         return view

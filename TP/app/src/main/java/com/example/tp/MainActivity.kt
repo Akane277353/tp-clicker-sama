@@ -112,8 +112,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     //Fonction utilisé dans le shop qui double le nombre de gold gagné pendant 10 minutes
     fun doubleOr(){
-        if (player.gold >= 300){ //Teste si le joueur à assez de gold pour acheter le boost
-            player.gold = player.gold - 300
+        if (player.gold >= 300*multi/10){ //Teste si le joueur à assez de gold pour acheter le boost
+            player.gold = player.gold - 300*multi/10
             player.multiplicateur = player.multiplicateur + 2 //Modifie le multiplicateur de gold
             findViewById<TextView>(R.id.goldText).text = player.gold.toString()
             val liveData: MutableLiveData<String> = MutableLiveData()
@@ -127,8 +127,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
     //Fonction utilisé dans le shop qui triple le nombre de gold gagné pendant 10 minutes
     fun tripleOr(){
-        if (player.gold >= 1000){ //Teste si le joueur à assez de gold pour acheter le boost
-            player.gold = player.gold - 1000
+        if (player.gold >= 1000*multi/10){ //Teste si le joueur à assez de gold pour acheter le boost
+            player.gold = player.gold - 1000*multi/10
             player.multiplicateur = player.multiplicateur + 3 //Modifie le multiplicateur de gold
             findViewById<TextView>(R.id.goldText).text = player.gold.toString()
             val liveData: MutableLiveData<String> = MutableLiveData()
@@ -183,7 +183,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
          */
 
         multi = pib.getPib(pays)
-        Toast.makeText(this, multi.toString(), Toast.LENGTH_SHORT).show()
 
         if(CharStorage.get(applicationContext).size() != 5) {
             char1 = PlayableChar(
@@ -293,10 +292,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                         addressFragments.add(adresse.getAddressLine(i))
                     }
                     pays = adresse.countryName
-                    Log.d("pays", pays)
                     multi = pib.getPib(pays)
-                    Toast.makeText(this, multi.toString(), Toast.LENGTH_SHORT).show()
-
                     Log.d(
                         "GPS",
                         TextUtils.join(System.getProperty("line.separator"), addressFragments)
