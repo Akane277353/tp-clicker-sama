@@ -193,27 +193,27 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         if(CharStorage.get(applicationContext).size() != 5) {
             char1 = PlayableChar(
                 1, "Giusepe", 1000, 100, 150,
-                250, 0, 0, 0, false, false,10000
+                250, 1, 1, 1, false, false,100000
             )
 
             char2 =  PlayableChar(
                 2, "Rigobert", 1750, 101, 150,
-                150, 1, 1, 1, false, false,50000
+                150, 1, 1, 1, false, false,500000
             )
 
             char3 =  PlayableChar(
                 3, "George", 3000, 30, 40,
-                50, 1, 1, 1, false, false,75000
+                50, 1, 1, 1, false, false,750000
             )
 
             char4 = PlayableChar(
                 4,"Semi Chips", 450, 350, 450,
-                400, 1, 1, 1, false, false,110000
+                400, 1, 1, 1, false, false,1100000
             )
 
             char5 = PlayableChar(
                 5,"404 Error", 1, 3333333, 66666,
-                999, 66666, 66666, 666, false, false,999999999
+                9999, 6666, 6666, 66, false, false,999999999
             )
 
             CharStorage.get(applicationContext).insert(char1)
