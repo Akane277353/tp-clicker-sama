@@ -23,7 +23,7 @@
             android:layout_marginHorizontal="25dp"
             android:textAlignment="center"
             android:textSize="50dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="Magasin" />
 
     </LinearLayout>
